@@ -1,5 +1,5 @@
 import { Product } from "../models/Product.js";
-import { uploadFile } from "../aws/s3.js";
+import { uploadFile, getFileURL } from "../aws/s3.js";
 
 export const getProducts = async (req, res) => {
   try {
@@ -40,12 +40,13 @@ export const createProduct = async (req, res) => {
       nombre,
       marca,
       precio,
-      imagen,
+      imagen: (await getFileURL(imagen)).toString(),
       id_categoria,
       cantidad,
       descripcion,
       promocion,
     });
+    console.log(newProduct.imagen)
     res.json(newProduct);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -61,8 +62,8 @@ export const updateProduct = async (req, res) => {
       },
     });
     product.set(req.body);
-    await product.save();
-    return res.json();
+    const result = await product.save();
+    return res.json(result);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -76,8 +77,8 @@ export const deleteProduct = async (req, res) => {
         id,
       },
     });
-    res.json(result);
-    return res.sendStatus(204);
+    //res.json({ message: "producto eliminado" });
+    return res.json({ message: "Producto eliminado" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

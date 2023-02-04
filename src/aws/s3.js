@@ -63,5 +63,5 @@ export async function getFileURL(filename) {
     Bucket: AWS_BUCKET_NAME,
     Key: filename,
   });
-  return await getSignedUrl(client, command, { expiresIn: 3600 });
+  return await getSignedUrl(client, command, { expiresIn: 33600 });
 }

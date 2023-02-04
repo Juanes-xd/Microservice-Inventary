@@ -20,7 +20,7 @@ export const Product = sequelize.define(
       type: DataTypes.INTEGER,
     },
     imagen: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     id_categoria: {
       type: DataTypes.INTEGER,
